@@ -29,3 +29,8 @@ class TestViews(unittest.TestCase):
         self.assertIn(b'Wind Speed:', response.data)
         self.assertIn(b'Rain:', response.data)
         self.assertIn(b'Pressure:', response.data)
+
+    def test_temperature_unit(self):
+        response = self.app.post('/', data={'city': 'London'})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'\xc2\xb0C', response.data)  # Check for "°C" in the response data
